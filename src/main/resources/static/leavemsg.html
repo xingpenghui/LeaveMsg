@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1804留言墙</title>
+    <script type="application/javascript" src="jquery-3.3.1.js"></script>
+    <script type="application/javascript">
+        function refsh() {
+            $.get("msgall.do",null,function (obj) {
+                var res="";
+                $("#pdata").html("");
+                for(var i=0;i<obj.length;i++){
+                    res+="序号："+obj[i].id+" 内容："+obj[i].content+"<br/>";
+                }
+                $("#pdata").html(res);
+            })
+        }
+        function sub() {
+            var f=$("#f1");
+            $.ajax({
+                url:f[0].action,
+                method:f[0].method,
+                data:f.serialize(),
+                success:function (obj) {
+                    if(obj.code==200){
+                        refsh();
+                        alert("留言成功");
+
+                    }else {
+                        alert("留言失败")
+                    }
+                }
+            })
+        }
+    </script>
+    <style type="text/css">
+        div{
+            margin: 0 auto;
+            border: 1px solid red;
+            font-size: 20px;
+        }
+        input,button{
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<div style="height: 600px;">
+    
+    <div style="height: 90%;width: 95%">
+        <h1>留言内容</h1><h3><button value="刷新" onclick="refsh()" type="button">刷新</button></h3>
+        <p id="pdata"></p>
+    </div>
+    
+    <div style="height: 8%; width: 95%">
+        <form action="/msgadd.do" method="post" id="f1">
+        <input style="width:70%" type="text" placeholder="请输入留言内容……" name="content">
+        <input style="width:25%;border: 1px solid white" type="button" onclick="sub()" value="留言">
+        </form>
+    </div>
+</div>
+
+
+
+</body>
+</html>

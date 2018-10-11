@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.leavemsg.mapper.MsgMapper">
+  <resultMap id="BaseResultMap" type="com.qfedu.leavemsg.domain.Msg">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, content, createtime, ip
+  </sql>
+  <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_msg
+  </select>
+
+  <insert id="insert" parameterType="com.qfedu.leavemsg.domain.Msg">
+    insert into t_msg ( content, createtime, ip)
+    values ( #{content,jdbcType=VARCHAR}, now(),  #{ip,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>
